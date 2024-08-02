@@ -23,6 +23,9 @@ def main():
             if ev.type == pygame.QUIT:
                 on = False
                 break
+            elif ev.type == pygame.VIDEORESIZE:
+                windowWidth, windowHeight = ev.w, ev.h
+                size = ev.size
         scr.blit(theme.windowBackground.create(windowWidth, windowHeight), (0, 0))
         pygame.draw.line(scr, (170, 170, 170), (0, 30), (windowWidth, 30))
         pygame.display.update()

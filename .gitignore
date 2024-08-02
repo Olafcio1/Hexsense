@@ -1,0 +1,19 @@
+# Python cache files
+__pycache__
+*.pyc
+
+# IDE files (if someone is using anything other than vs code then XDD)
+.vscode
+.idea
+.eclipse
+.pycharm
+
+# Build files
+build
+dist
+*.pyz
+
+# Miscellanous
+temp
+tmp
+*.tmp

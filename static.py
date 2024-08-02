@@ -11,4 +11,5 @@ APP_DATA: str = util.booleans.check(
 
 THEMES_DIR: str = APP_DATA + os.path.sep + "themes"
 
+os.chdir(os.path.sep.join(__file__.split(os.path.sep)[:-1]))
 util.files.smakedirs(APP_DATA, THEMES_DIR)

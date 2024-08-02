@@ -86,7 +86,6 @@ class Theme():
             else:
                 string += c
         data.append(string)
-        print(data)
         del decoded, escaped, string
 
         t.name = data[0]

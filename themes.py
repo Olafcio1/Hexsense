@@ -41,10 +41,15 @@ class BackgroundColor(Color):
     """
 
     def create(self, w: int, h: int) -> pygame.Surface:
+        if len(self.gradient) == 0:
+            surf = pygame.Surface((w, h))
+            surf.fill(self.get_rgb())
+            return surf
         maxLineWidth = max(map(lambda line: len(line), self.gradient))
         gradient = [*map(lambda line: arrays.fulfill(line, maxLineWidth, ""), self.gradient)]
         surf = pygame.Surface((maxLineWidth, len(gradient)), pygame.SRCALPHA | pygame.HWSURFACE)
-        surf.fill(self.get_rgb())
+        if self.value != "":
+            surf.fill(self.get_rgb())
         for linei, line in enumerate(gradient):
             for index, color in enumerate(line):
                 if color == "":
@@ -69,7 +74,7 @@ class Theme():
         t = Theme()
         data = []
 
-        decoded = raw.decode("utf-16-be", "strict")
+        decoded = raw.decode("utf-8", "strict")
         if decoded.startswith("b64::"):
             decoded = base64.b64decode(decoded[5:])
         escaped = False
@@ -90,15 +95,17 @@ class Theme():
 
         t.name = data[0]
         t.windowBackground = BackgroundColor(data[1], json.loads(data[2]))
+        t.topHr = BackgroundColor(data[3], json.loads(data[4]))
         return t
 
     def save(self) -> None:
         """Installs the theme, or if already installs, saves it."""
-        values = [self.windowBackground.value, self.windowBackground.gradient]
+        values = [self.windowBackground.value, self.windowBackground.gradient, self.topHr.value, self.topHr.gradient]
         content = "|".join(map(lambda v: v.replace("\\", "\\\\").replace("|", "\\|"), values))
         with open(static.THEMES_DIR + os.path.sep + self.name + ".theme", "wb") as f:
-            f.write("b64::" + base64.b64encode(content.encode("utf-16-be", "strict")))
+            f.write("b64::" + base64.b64encode(content.encode("utf-8", "strict")))
 
     name: str
 
     windowBackground: BackgroundColor
+    topHr: BackgroundColor

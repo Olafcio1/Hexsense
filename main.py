@@ -27,10 +27,7 @@ def main():
                 windowWidth, windowHeight = ev.w, ev.h
                 size = ev.size
         scr.blit(theme.windowBackground.create(windowWidth, windowHeight), (0, 0))
-        scr.blit(BackgroundColor("#fff", [
-            [(0, 0, 0, 180)],
-            [(0, 0, 0, 150)]
-        ]).create(windowWidth, 10), (0, 30))#pygame.draw.line(scr, (170, 170, 170), (0, 30), (windowWidth, 30))
+        scr.blit(theme.topHr.create(windowWidth, 2), (0, 30))#pygame.draw.line(scr, (170, 170, 170), (0, 30), (windowWidth, 30))
         pygame.display.update()
 
 if __name__ == "__main__":

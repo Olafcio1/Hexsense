@@ -18,6 +18,20 @@ def main():
     pygame.display.set_allow_screensaver(True)
     pygame.display.set_caption("Hexsense")
     # pygame.display.set_icon(pygame.image.load_basic("./logo.png"))
+
+    body = BodyNode()
+    body.style.background = theme.windowBackground
+    body.fullRender(scr, 0, 0)
+
+    topBar = Element("nav")
+    topBar.style.height = 30
+    topBar.style.borderBottomColor = theme.topHr
+    topBar.style.borderBottomSize = 2
+    body.append(topBar)
+
+    print(topBar.style.height, topBar.size())
+
+    mouseX, mouseY = 0, 0
     while on:
         for ev in pygame.event.get():
             if ev.type == pygame.QUIT:
@@ -26,8 +40,12 @@ def main():
             elif ev.type == pygame.VIDEORESIZE:
                 windowWidth, windowHeight = ev.w, ev.h
                 size = ev.size
-        scr.blit(theme.windowBackground.create(windowWidth, windowHeight), (0, 0))
-        scr.blit(theme.topHr.create(windowWidth, 2), (0, 30))#pygame.draw.line(scr, (170, 170, 170), (0, 30), (windowWidth, 30))
+                body._inited = False
+            elif ev.type == pygame.MOUSEMOTION:
+                mouseX, mouseY = ev.pos
+            elif ev.type == pygame.MOUSEBUTTONDOWN:
+                body.invokeClick(*ev.pos)
+        body.fullRender(scr, mouseX, mouseY)
         pygame.display.update()
 
 if __name__ == "__main__":

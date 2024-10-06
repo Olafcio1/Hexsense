@@ -3,9 +3,11 @@ import pygame
 from .Style import *
 from .Color import *
 from .StyleValueTypes import *
+
+from abc import ABC, abstractmethod
 from typing import final, Any, TypeVar
 
-class Node():
+class Node(ABC):
     _inited: bool = False
 
     @final
@@ -46,6 +48,7 @@ class Node():
     def invokeClick(self, mouseX: int, mouseY: int) -> None:
         self._events.append(["click", mouseX, mouseY])
 
+    @abstractmethod
     def size(self) -> int: ...
 
     def render(self, ctx: pygame.Surface, mouseX: int, mouseY: int) -> None: ...
@@ -194,3 +197,17 @@ class Element(Node):
 
     parent: ElementOrNone = None
     def click(self, ctx: pygame.Surface, mouseX: int, mouseY: int) -> None: ...
+
+font: pygame.font.Font | None = None
+class TextNode(Element):
+    text: str
+
+    def __init__(self, text: str):
+        super().__init__("text")
+        self.text = text
+
+    def render(self, ctx: pygame.Surface, mouseX: int, mouseY: int) -> None:
+        global font
+        if font == None:
+            font = pygame.font.SysFont("Arial", 20)
+        ctx.blit(font.render(self.text, True, self.style.color.get_rgb()), (0, 0))

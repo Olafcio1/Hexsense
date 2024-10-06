@@ -1,3 +1,5 @@
+# from typing import Literal
+## Literal["inherit", "initial"] | 
 from .StyleValueTypes import *
 
 class Style():
@@ -38,13 +40,13 @@ class Style():
     borderBottomColor: BackgroundColor
     borderBottomSize: int
     def setBorder(self, color: BackgroundColor, size: int):
-        self.borderTop = color
+        self.borderTopColor = color
         self.borderTopSize = size
-        self.borderBottom = color
+        self.borderBottomColor = color
         self.borderBottomSize = size
-        self.borderLeft = color
+        self.borderLeftColor = color
         self.borderLeftSize = size
-        self.borderRight = color
+        self.borderRightColor = color
         self.borderRightSize = size
         return color
 
@@ -59,7 +61,7 @@ class DefaultStyle(Style):
 
     inline = False
     background = None
-    color = "inherit"
+    color = Color("#f00")
 
     passthrough = False
     opacity = 1

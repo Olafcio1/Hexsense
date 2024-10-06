@@ -29,6 +29,10 @@ def main():
     topBar.style.borderBottomSize = 2
     body.append(topBar)
 
+    logo = Element("p")
+    logo.append(TextNode("Hexsense"))
+    topBar.append(logo)
+
     print(topBar.style.height, topBar.size())
 
     mouseX, mouseY = 0, 0
